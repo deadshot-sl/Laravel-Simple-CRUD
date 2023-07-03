@@ -21,20 +21,23 @@
                         </ul>
                     </div>
                 </div>
-                <div class="table-search">
-                    <div>
-                        <button class="search-select">
-                            Search Product
-                        </button>
-                        <span class="search-select-arrow">
-                            <i class="fas fa-caret-down"></i>
-                        </span>
+                <form action="{{ route('products.index') }}" accept-charset="UTF-8" role="search" method="GET"
+                    accept.charset="UTF-8">
+                    <div class="table-search">
+                        <div>
+                            <button class="search-select">
+                                Search Product
+                            </button>
+                            <span class="search-select-arrow">
+                                <i class="fas fa-caret-down"></i>
+                            </span>
+                        </div>
+                        <div class="relative">
+                            <input class="search-input" type="text" name="search" placeholder="Search product..."
+                                value="{{ request('search') }}">
+                        </div>
                     </div>
-                    <div class="relative">
-                        <input class="search-input" type="text" name="search" placeholder="Search product..."
-                            value="{{ request('search') }}">
-                    </div>
-                </div>
+                </form>
                 <div class="table-product-head">
                     <p>Image</p>
                     <p>Name</p>
@@ -43,7 +46,7 @@
                     <p>Actions</p>
                 </div>
                 <div class="table-product-body">
-                    @if (count($products) > 0)
+                    @if ($products->count() > 0)
                         @foreach ($products as $product)
                             <img src="{{ asset('images/' . $product->image) }}" />
                             <p> {{ $product->name }}</p>
@@ -59,16 +62,12 @@
                             </div>
                         @endforeach
                     @else
+                        <p>No product found</p>
                     @endif
                 </div>
                 <div class="table-paginate">
-                    <div class="pagination">
-                        <a href="#" disabled>&laquo;</a>
-                        <a class="active-page">1</a>
-                        <a>2</a>
-                        <a>3</a>
-                        <a href="#">&raquo;</a>
-                    </div>
+                    {{ $products->links('layouts.pagination') }}
+
                 </div>
             </div>
         </section>
